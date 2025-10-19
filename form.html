@@ -5,29 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>PresenceForm</title>
-    <script>
+<script>
     document.addEventListener('DOMContentLoaded', () => {
         const form = document.getElementById('PresenceForm');
-        form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        const data = {
-            name: formData.get('name'),
-            option: formData.get('select'),
-            session: new URLSearchParams(window.location.search).get('session')
-        };
-
-        await fetch('https://script.google.com/macros/s/AKfycbzd8iZh4fiFFU4Fvx25p2mXxsb61vc_TUqoC-JChx_OSZBR-d3rTKNwrsAbar3ZdUHUuA/exec', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        });
-
-        alert('Presence Recorded ✅');
-        form.reset();
+    
+        // get session from URL
+        const paramsFromURL = new URLSearchParams(window.location.search);
+        const session = paramsFromURL.get('session');
+    
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+    
+            const formData = new FormData(form);
+    
+            // build URL with GET parameters
+            const params = new URLSearchParams({
+                name: formData.get('name'),
+                option: formData.get('select'),
+                session: session
+            });
+    
+            // send GET request to Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbzd8iZh4fiFFU4Fvx25p2mXxsb61vc_TUqoC-JChx_OSZBR-d3rTKNwrsAbar3ZdUHUuA/exec?' + params.toString())
+                .then(() => alert('Presence recorded ✅'))
+                .catch(err => console.error('Error:', err));
+    
+            form.reset();
         });
     });
 </script>
+
 
 </head>
 
