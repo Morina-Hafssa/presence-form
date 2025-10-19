@@ -7,4 +7,4 @@ function generateNewQR() {
 }
 
 generateNewQR();
-setInterval(generateNewQR, 60000); // change every 60s , refresh auto
+setInterval(generateNewQR, 600000); // change every 60s , refresh auto
