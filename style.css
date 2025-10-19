@@ -1,0 +1,61 @@
+body{
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+form{
+    background-color: #89d854;
+    width: 85%;
+    height: 87%;
+    margin: auto;
+    border-radius: 7px;
+}
+h1{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 10%;
+    margin-top: 30px;
+}
+.field {
+  width: 55%;
+  margin: 20px auto;
+}
+
+.field p {
+  margin: 0 0 8px 0; /* small space below label */
+  font-weight: 500;
+  font-size: 18px;
+}
+
+input, select, button {
+  display: block;
+  width: 100%;
+  margin: 20px auto;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  border: none;
+  box-sizing: border-box;      /* ensures padding+border count in width */
+  line-height: 1.2;            /* keep consistent vertical space */
+  appearance: none;            /* removes OS-specific styles */
+  -webkit-appearance: none;    /* Safari fix */
+}
+input:focus, select:focus, button:focus {
+  outline: none;
+  border-color: #777;
+}
+button{
+    margin-top: 30px;
+    font-weight: bold;
+    background-color: #d6ffba;
+    transition: 0.3s;
+}
+button:hover{
+    background-color: #b1ff8c;
+    cursor: pointer;
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+        background-color: #89d854;
+    }
+    canvas{
+        border-radius: 7px;
+    }
+</style>
+<body>
+    <h2>Scan Presence Qr</h2>
+    <canvas id="qrcode"></canvas>
+    
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

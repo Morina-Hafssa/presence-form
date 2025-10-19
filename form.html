@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>PresenceForm</title>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('PresenceForm');
+        form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = {
+            name: formData.get('name'),
+            option: formData.get('select'),
+            session: new URLSearchParams(window.location.search).get('session')
+        };
+
+        await fetch('https://script.google.com/macros/s/AKfycbzd8iZh4fiFFU4Fvx25p2mXxsb61vc_TUqoC-JChx_OSZBR-d3rTKNwrsAbar3ZdUHUuA/exec', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        alert('Presence Recorded ✅');
+        form.reset();
+        });
+    });
+</script>
+
+</head>
+
+<body>
+    <form action="" id="PresenceForm">
+        <h1>Fill the Form</h1>
+        <div class="field">
+        <p>Enter Your Name:</p>
+        <input type="text" placeholder="FullName" name="name">    
+        </div>
+        <div class="field">
+        <p>Select :</p>
+        <select name="select" id="options">
+            <option value="membre">Membre</option>
+            <option value="guest">Guest</option>
+        </select>
+        <button type="submit">Submit</button>
+        </div>
+    </form>
+        
+
+</body>
+</html>
