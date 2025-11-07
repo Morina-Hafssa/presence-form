@@ -2,23 +2,86 @@ body{
     margin: 0;
     box-sizing: border-box;
     width: 100%;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     align-items: center;
     justify-content: center;
 }
+/* loadinggg popup */
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: 
+    radial-gradient(farthest-side,#89d854 95%,#0000) 50% 1px/12px 12px no-repeat,
+    radial-gradient(farthest-side,#0000 calc(100% - 14px),#deffc7 0);
+  animation: l9 2s infinite linear;
+}
+@keyframes l9 {to{transform: rotate(1turn)}}
+.hidden {
+  display: none;
+}
+
+#popup,.loading {
+  position: fixed;
+  inset: 0; /* top:0; left:0; right:0; bottom:0 */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.loading .loadholder{
+  background-color: white;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  padding: 50px;
+}
+#popup p {
+  background: white;
+  padding: 25px 35px;
+  border-radius: 12px;
+  font-size: 18px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  color: #333;
+  text-align: center;
+  position: relative;
+  max-width: 400px;
+}
+
+#popup .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.849);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+
+#popup .close:hover {
+  color: white;
+}
 form{
-    background-color: #89d854;
+    background-color: #89d854cc;
     width: 85%;
-    height: 87%;
-    margin: auto;
+    height: 95%;
+    margin: 20px auto;
+    
     border-radius: 7px;
 }
 h1{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 10%;
-    margin-top: 30px;
+    margin-bottom: 5%;
+    /* margin-top: 30px; */
+}
+.note{
+  color: red;
+  text-align: center;
 }
 .field {
   width: 55%;
@@ -40,10 +103,10 @@ input, select, button {
   border-radius: 5px;
   border: 1px solid #ccc;
   border: none;
-  box-sizing: border-box;      /* ensures padding+border count in width */
-  line-height: 1.2;            /* keep consistent vertical space */
-  appearance: none;            /* removes OS-specific styles */
-  -webkit-appearance: none;    /* Safari fix */
+  box-sizing: border-box;      
+  line-height: 1.2;           
+  appearance: none;           
+  -webkit-appearance: none;    
 }
 input:focus, select:focus, button:focus {
   outline: none;
@@ -58,4 +121,20 @@ button{
 button:hover{
     background-color: #b1ff8c;
     cursor: pointer;
+}
+img{
+    width:80px;
+
+    margin: 8px;
+    /* height:100px; */
+    background-color: white;
+    border-radius: 7px;
+    padding: 0;
+    opacity: 0.95;
+    
+}
+.hidden{
+  display: block;
+  background-color: white;
+  position: absolute;
 }
