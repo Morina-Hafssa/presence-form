@@ -1,60 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>PresenceForm</title>
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('PresenceForm');
-    
-        // get session from URL
-        const paramsFromURL = new URLSearchParams(window.location.search);
-        const session = paramsFromURL.get('session');
-    
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-    
-            const formData = new FormData(form);
-    
-            // build URL with GET parameters
-            const params = new URLSearchParams({
-                name: formData.get('name'),
-                option: formData.get('select'),
-                session: session
-            });
-    
-            // send GET request to Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbzd8iZh4fiFFU4Fvx25p2mXxsb61vc_TUqoC-JChx_OSZBR-d3rTKNwrsAbar3ZdUHUuA/exec?' + params.toString())
-                .then(() => alert('Presence recorded ✅'))
-                .catch(err => console.error('Error:', err));
-    
-            form.reset();
-        });
-    });
-</script> -->
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presence Form</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <form id="PresenceForm" action="https://script.google.com/macros/s/AKfycbwMaRlaQu6EdNvY72__XOZOl_emejBCcYtva6Hw_w2ZZ_ZLO2qqdyZxO2GE3KunA0a12A/exec" method="GET">
-        <h1>Fill the Form</h1>
-        <div class="field">
-        <p>Enter Your Name:</p>
-        <input type="text" placeholder="FullName" name="name">    
-        </div>
-        <div class="field">
-        <p>Select :</p>
-        <select name="select" id="options">
-            <option value="membre">Membre</option>
-            <option value="guest">Guest</option>
-        </select>
-        <button type="submit">Submit</button>
-        </div>
-    </form>
-        
+
+  <form id="PresenceForm">
+    <img src="/logo1.png" alt="">
+    <h1>Fill the Form</h1>
+
+    <div class="field">
+      <p>Nom et Prénom:</p>
+      <input type="text" placeholder="FullName" name="name" required>
+    </div>
+
+    <div class="field">
+      <p>Numéro de téléphone:</p>
+      <input type="text" name="phone" required>
+    </div>
+
+    <div class="field">
+      <p>Choisis :</p>
+      <select name="select" id="options">
+        <option value="interne">Interne</option>
+        <option value="externe">Externe</option>
+        <option value="membre">Membre</option>
+      </select>
+    </div>
+
+    <button type="submit">Submit</button>
+    <div class="note">Ne cliquez sur "Submit" qu'après avoir vérifié vos données.</div>
+  </form>
+
+  <div class="loading" style="display:none;">
+    <div class="loadholder">
+      <h1>Loading...</h1>
+      <div class="loader"></div>
+    </div>
+  </div>
+
+  <div id="popup" class="hidden" style="display:none;">
+    <span class="close">&times;</span>
+    <p>❌ Vous ne pouvez pas soumettre plus d'une seule fois</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('PresenceForm');
+      const popup = document.getElementById('popup');
+      const loading = document.getElementByClassName('loading');
+      const closeBtn = popup.querySelector('.close');
+
+      const paramsFromURL = new URLSearchParams(window.location.search);
+      const session = paramsFromURL.get('session');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const alreadySubmitted = false; // change this later
+
+        if (alreadySubmitted) {
+          popup.style.display = 'flex';
+        } else {
+          loading.style.display = 'flex';
+
+          const formData = new FormData(form);
+          const params = new URLSearchParams({
+            name: formData.get('name'),
+            phone: formData.get('phone'),
+            option: formData.get('select'),
+            session: session || ''
+          });
+
+          fetch('https://script.google.com/macros/s/AKfycbwk3GQQoQ_8UpmGEL0sfMXftXYzBtHdBJivCl7tM5pya6QocRQKiCuQqgyc3cio3Mg9YA/exec?' + params.toString())
+            .then(() => {
+              alert('Presence recorded ✅');
+              form.reset();
+            })
+            .catch(err => console.error('Error:', err))
+            .finally(() => loading.style.display = 'none');
+        }
+      });
+
+      closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+      });
+    });
+  </script>
 
 </body>
 </html>
