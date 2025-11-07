@@ -71,7 +71,7 @@
       return;
     }
 
-    loading.style.display = 'block';
+    loading.style.display = 'flex';
 
     const formData = new FormData(form);
     const params = new URLSearchParams({
@@ -83,10 +83,10 @@
 
     fetch('https://script.google.com/macros/s/AKfycbxN5YXvbEtgnw3-vXsxxWSu2kZ0awC9buqzLdJjVWQosD7Msb8m6ehYYEaDOqXVhwml/exec?' + params.toString())
       .then(() => {
-        alert('Presence recorded ✅');
-        localStorage.setItem('lastSubmission', Date.now()); // Save timestamp
+        localStorage.setItem('lastSubmission', Date.now()); // save first ✅
         alreadySubmitted = true;
         form.reset();
+        window.location.href = 'success.html'; // redirect after saving
       })
       .catch(err => console.error('Error:', err))
       .finally(() => {
