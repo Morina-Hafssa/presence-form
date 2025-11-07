@@ -81,7 +81,7 @@
       session: session || ''
     });
 
-    fetch('https://script.google.com/macros/s/AKfycbwk3GQQoQ_8UpmGEL0sfMXftXYzBtHdBJivCl7tM5pya6QocRQKiCuQqgyc3cio3Mg9YA/exec?' + params.toString())
+    fetch('https://script.google.com/macros/s/AKfycbzDkay5AjBNtANlncVWwesQ6BlRBPvACCgV75zOxBGi4EbC7c7hzxMZnbR92lMftmhTaA/exec?' + params.toString())
       .then(() => {
         alert('Presence recorded ✅');
         localStorage.setItem('lastSubmission', Date.now()); // Save timestamp
