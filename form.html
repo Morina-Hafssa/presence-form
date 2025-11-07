@@ -49,46 +49,57 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('PresenceForm');
-      const popup = document.getElementById('popup');
-      const loading = document.getElementByClassName('loading');
-      const closeBtn = popup.querySelector('.close');
+  const form = document.getElementById('PresenceForm');
+  const popup = document.getElementById('popup');
+  const loading = document.querySelector('.loading');
+  const closeBtn = popup.querySelector('.close');
 
-      const paramsFromURL = new URLSearchParams(window.location.search);
-      const session = paramsFromURL.get('session');
+  const paramsFromURL = new URLSearchParams(window.location.search);
+  const session = paramsFromURL.get('session');
 
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
+  // Check if already submitted in the last 24h
+  const lastSubmission = localStorage.getItem('lastSubmission');
+  const now = Date.now();
+  const oneDay = 24 * 60 * 60 * 1000;
+  let alreadySubmitted = lastSubmission && (now - lastSubmission < oneDay);
 
-        const alreadySubmitted = false; // change this later
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-        if (alreadySubmitted) {
-          popup.style.display = 'flex';
-        } else {
-          loading.style.display = 'flex';
+    if (alreadySubmitted) {
+      popup.style.display = 'flex';
+      return;
+    }
 
-          const formData = new FormData(form);
-          const params = new URLSearchParams({
-            name: formData.get('name'),
-            phone: formData.get('phone'),
-            option: formData.get('select'),
-            session: session || ''
-          });
+    loading.style.display = 'block';
 
-          fetch('https://script.google.com/macros/s/AKfycbzFvu-4qrO82Ho2X_yYHN5G4b8wydgP-uqSvcbBqzdKXqWi2PynkZo6P1oSc0XND7Ys8A/exec' + params.toString())
-            .then(() => {
-              alert('Presence recorded ✅');
-              form.reset();
-            })
-            .catch(err => console.error('Error:', err))
-            .finally(() => loading.style.display = 'none');
-        }
-      });
-
-      closeBtn.addEventListener('click', () => {
-        popup.style.display = 'none';
-      });
+    const formData = new FormData(form);
+    const params = new URLSearchParams({
+      name: formData.get('name'),
+      phone: formData.get('phone'),
+      option: formData.get('select'),
+      session: session || ''
     });
+
+    fetch('https://script.google.com/macros/s/AKfycbwk3GQQoQ_8UpmGEL0sfMXftXYzBtHdBJivCl7tM5pya6QocRQKiCuQqgyc3cio3Mg9YA/exec?' + params.toString())
+      .then(() => {
+        alert('Presence recorded ✅');
+        localStorage.setItem('lastSubmission', Date.now()); // Save timestamp
+        alreadySubmitted = true;
+        form.reset();
+      })
+      .catch(err => console.error('Error:', err))
+      .finally(() => {
+        loading.style.display = 'none';
+      });
+  });
+
+  // Close popup
+  closeBtn.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+});
+
   </script>
 
 </body>
