@@ -81,17 +81,14 @@
       session: session || ''
     });
 
-    fetch('https://script.google.com/macros/s/AKfycbxN5YXvbEtgnw3-vXsxxWSu2kZ0awC9buqzLdJjVWQosD7Msb8m6ehYYEaDOqXVhwml/exec?' + params.toString())
-      .then(() => {
-        localStorage.setItem('lastSubmission', Date.now()); // save first ✅
-        alreadySubmitted = true;
-        form.reset();
-        window.location.href = 'success.html'; // redirect after saving
-      })
-      .catch(err => console.error('Error:', err))
-      .finally(() => {
-        loading.style.display = 'none';
-      });
+  // Save timestamp immediately
+  localStorage.setItem('lastSubmission', Date.now());
+  alreadySubmitted = true;
+
+  // Redirect user directly to Apps Script (bypasses CORS)
+  window.location.href =
+    'https://script.google.com/macros/s/AKfycbwk3GQQoQ_8UpmGEL0sfMXftXYzBtHdBJivCl7tM5pya6QocRQKiCuQqgyc3cio3Mg9YA/exec?' +
+    params.toString();
   });
 
   // Close popup
